@@ -1,17 +1,15 @@
+FROM node:18-alpine
 
-# Use the official n8n Docker image
-FROM n8nio/n8n:latest
+ENV NODE_ENV=production \
+    N8N_PORT=5678 \
+    N8N_BASIC_AUTH_ACTIVE=false \
+    N8N_EDITOR_BASE_URL=http://localhost:5678 \
+    GENERIC_TIMEZONE=Asia/Kolkata
 
-# Set environment variables for n8n
-ENV N8N_HOST=0.0.0.0
-ENV N8N_PORT=10000
-ENV N8N_PROTOCOL=https
-ENV NODE_ENV=production
+WORKDIR /data
 
-# Expose n8n's port
+RUN npm install -g n8n
+
 EXPOSE 5678
 
-# Start n8n
 CMD ["n8n", "start"]
-
-
